@@ -1,12 +1,19 @@
 #!/bin/bash
-local wfpanel = "/home/pi/.config/wf-panel-pi.ini"
-local usrbin = "/usr/bin/"
-local line_to_add="launcher_000004=/usr/bin/wvkbd.desktop"
 
-chmod +x toggle-wvkbd.sh
-cp ./toggle-wvkbd.sh ${usrbin}
-cp ./wvkbd.desktop ${usrbin}
+wfpanel="/home/pi/.config/wf-panel-pi.ini"
+usrbin="/usr/bin/"
+line_to_add="launcher_000004=/usr/bin/wvkbd.desktop"
 
+# 确保 toggle-wvkbd.sh 和 wvkbd.desktop 文件路径正确
+toggle_wvkbd="./toggle-wvkbd.sh"
+wvkbd_desktop="./wvkbd.desktop"
+
+# 为 toggle-wvkbd.sh 添加执行权限
+chmod +x "$toggle_wvkbd"
+
+# 将 toggle-wvkbd.sh 和 wvkbd.desktop 复制到 /usr/bin/
+cp "$toggle_wvkbd" "$usrbin"
+cp "$wvkbd_desktop" "$usrbin"
 
 # 检查文件是否存在
 if [ -f "$wfpanel" ]; then
@@ -14,5 +21,5 @@ if [ -f "$wfpanel" ]; then
     echo "$line_to_add" >> "$wfpanel"
     echo "Success add to $wfpanel"
 else
-    echo "$config_file not exist"
+    echo "$wfpanel not exist"
 fi
